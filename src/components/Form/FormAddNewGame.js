@@ -39,6 +39,8 @@ export default function FormAddNewGame() {
 
     let Players = [];
 
+ 
+
     if (PlayerNamen.length > 1) {
       PlayerNamen.forEach((pName) => {
         if (pName.length !== 0) {
@@ -54,14 +56,13 @@ export default function FormAddNewGame() {
         gamename: GameName,
         gamedate: getCurrentDate(),
       });
-    } else if (GameTitleTextInput === "") {
+
+    }else if (GameTitleTextInput === "") {
       setMessage("Enter a Gamename");
       setTimeout(() => {
         setMessage(null);
       }, 2000);
-    }
-
-    if (Players.length <= 1) {
+    }else {
       setGame(null);
       setMessage("Enter more players, playing solo is boring");
       setTimeout(() => {
