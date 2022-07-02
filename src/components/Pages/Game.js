@@ -15,6 +15,8 @@ export function GamePage() {
   let navigate = useNavigate();
   const [game, setGame] = useState(getLocalStorage(LocalStorageKeyNameGame));
 
+
+  // NO WORK if you navigate to /game without any datas. localstorage are null. but will not return to main page
   useEffect(() => {
     if (getLocalStorage(LocalStorageKeyNameGame) === null) {
       navigate("/");
