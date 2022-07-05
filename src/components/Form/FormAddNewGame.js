@@ -67,16 +67,3 @@ const StyledButton = styled.button`
   border: 1px solid black;
   font-size: larger;
 `;
-
-const StyledErrorBox = styled.div`
-  text-align: center;
-  background: red;
-  z-index: 100;
-  position: relative;
-  margin-top: 10px;
-  border-radius: 5px;
-  width: 100%;
-  padding: 5px 0 6px;
-  height: auto;
-  font-size: larger;
-`;
