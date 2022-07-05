@@ -1,13 +1,33 @@
 import styled from "styled-components";
+import { Route, Routes } from "react-router-dom";
+
 import { HistoryPage } from "./components/Pages/History.js";
 import { HomePage } from "./components/Pages/Home.js";
 import { GamePage } from "./components/Pages/Game.js";
 
-import { Route, Routes } from "react-router-dom";
-
 import { Navigation } from "./components/Navigation/Navigation.js";
+import { useState } from 'react';
+
+
+
+
+
+
+
+
+
 
 function App() {
+  const [currentGame, setCurrentGame] = useState([])
+
+
+
+
+
+
+
+
+
   return (
     <>
       <header>
