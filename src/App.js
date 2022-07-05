@@ -1,13 +1,38 @@
 import styled from "styled-components";
+import { Route, Routes } from "react-router-dom";
+
 import { HistoryPage } from "./components/Pages/History.js";
 import { HomePage } from "./components/Pages/Home.js";
 import { GamePage } from "./components/Pages/Game.js";
 
-import { Route, Routes } from "react-router-dom";
-
 import { Navigation } from "./components/Navigation/Navigation.js";
+import { useState } from 'react';
+import { useEffect } from 'react';
+
+
+import { useNavigate } from "react-router-dom";
+
+
+
+
+
+
 
 function App() {
+  const [currentGame, setCurrentGame] = useState(null)
+
+  let navigate = useNavigate();
+  useEffect(()=>{
+
+    currentGame === null ? navigate("/") : navigate("/game");
+
+  },[currentGame,navigate])
+
+
+
+
+
+
   return (
     <>
       <header>
@@ -15,13 +40,13 @@ function App() {
       </header>
       <Main>
         <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/game" element={<GamePage />} />
+          <Route path="/" element={<HomePage onCreateNewGame={setCurrentGame}/>} />                   
+          <Route path="/game" element={<GamePage currentGame={currentGame}/>} />
           <Route path="/history" element={<HistoryPage />} />
         </Routes>
       </Main>
 
-      <Navigation />
+      <Navigation/>
     </>
   );
 }

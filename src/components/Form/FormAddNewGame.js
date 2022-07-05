@@ -1,94 +1,49 @@
 import styled from "styled-components";
-import { useState, useEffect } from "react";
-
+import { useState } from "react";
 import { nanoid } from "nanoid";
-import {
-  getLocalStorage,
-  setLocalStorage,
-  LocalStorageKeyNameGame,
-} from "../LocalStorage/Storage";
 import { getCurrentDate } from "../getCurrentDate";
-import { useNavigate } from "react-router-dom";
 
-export default function FormAddNewGame() {
-  const [message, setMessage] = useState(null);
-  const [game, setGame] = useState(
-    getLocalStorage(LocalStorageKeyNameGame) !== null
-      ? getLocalStorage(LocalStorageKeyNameGame)
-      : null
-  );
 
-  let navigate = useNavigate();
 
-  useEffect(() => {
-    setLocalStorage(LocalStorageKeyNameGame, game);
+export default function FormAddNewGame({onCreateNewGame}) {
+  const [gameName, setGameName] = useState("");
+  const [playerName, setPlayerName] = useState("");
 
-    if (getLocalStorage(LocalStorageKeyNameGame) !== null) {
-      navigate("/game");
-    }
-  }, [game, navigate]);
-
-  function handelClick(event) {
-    const Form = event.target.parentElement;
-    const GameTitleTextInput = Form.elements[0].value;
-    const PlayerNameTextInput = Form.elements[1].value;
-    let PlayerNamen = PlayerNameTextInput.split(",");
-
-    let GameName = GameTitleTextInput;
-    let GameID = nanoid();
-
-    let Players = [];
-
- 
-
+  function handelSubmit(e){
+    e.preventDefault();
+  
+    let Players = []; 
+    let PlayerNamen = playerName.split(",");
+  
     if (PlayerNamen.length > 1) {
       PlayerNamen.forEach((pName) => {
         if (pName.length !== 0) {
           Players.push({ id: nanoid(), name: pName, score: 0 });
         }
       });
-
-      Form.reset();
-
-      setGame({
+  
+      onCreateNewGame({
         Players,
-        id: GameID,
-        gamename: GameName,
+        id: nanoid(),
+        gamename: gameName,
         gamedate: getCurrentDate(),
       });
-
-    }else if (GameTitleTextInput === "") {
-      setMessage("Enter a Gamename");
-      setTimeout(() => {
-        setMessage(null);
-      }, 2000);
-    }else {
-      setGame(null);
-      setMessage("Enter more players, playing solo is boring");
-      setTimeout(() => {
-        setMessage(null);
-      }, 4000);
+    
     }
   }
 
+
   return (
     <>
-      <form>
-        <StyledInput required={true} placeholder="New Game"></StyledInput>
-        <StyledInput
-          required={true}
-          placeholder="Name, Name2, Name3"
-        ></StyledInput>
-        <StyledButton
-          type="button"
-          onClick={(event) => {
-            handelClick(event);
-          }}
-        >
-          Start New Game
-        </StyledButton>
+      <form onSubmit={handelSubmit}>
+        <StyledInput type="text" required placeholder="New Game" value={gameName} onChange={(e)=>{
+          setGameName(e.target.value)
+        }}></StyledInput>
+        <StyledInput type="text" required placeholder="Name, Name2, Name3" value={playerName} onChange={(e)=>{
+          setPlayerName(e.target.value)
+        }}></StyledInput>
+        <StyledButton>Start New Game</StyledButton>
       </form>
-      {message && <StyledErrorBox>{message}</StyledErrorBox>}
     </>
   );
 }
@@ -110,18 +65,5 @@ const StyledButton = styled.button`
   padding: 5px 0 6px;
   height: 50px;
   border: 1px solid black;
-  font-size: larger;
-`;
-
-const StyledErrorBox = styled.div`
-  text-align: center;
-  background: red;
-  z-index: 100;
-  position: relative;
-  margin-top: 10px;
-  border-radius: 5px;
-  width: 100%;
-  padding: 5px 0 6px;
-  height: auto;
   font-size: larger;
 `;

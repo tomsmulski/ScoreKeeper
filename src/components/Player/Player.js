@@ -1,28 +1,9 @@
 import styled from "styled-components";
 import { useState } from "react";
-import { useEffect } from "react";
-
-import {
-  getLocalStorage,
-  setLocalStorage,
-  LocalStorageKeyNameGame,
-} from "../LocalStorage/Storage";
 
 export default function Player({ player }) {
   const [scores, setScores] = useState(player);
 
-  useEffect(() => {
-    let gameData = getLocalStorage(LocalStorageKeyNameGame);
-
-    gameData.Players.map((gdata) => {
-      if (gdata.id === scores.id) {
-        gdata.score = scores.score;
-
-        setLocalStorage(LocalStorageKeyNameGame, gameData);
-      }
-      return true;
-    });
-  }, [scores]);
 
   function increase() {
     let CurrentScore = scores.score;

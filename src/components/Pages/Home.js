@@ -1,5 +1,5 @@
 import FormAddNewGame from "../Form/FormAddNewGame";
 
-export function HomePage() {
-  return <FormAddNewGame />;
+export function HomePage({onCreateNewGame}) {
+  return <FormAddNewGame onCreateNewGame={onCreateNewGame}/>;
 }
